@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pms.hostelsolutions.cen3031.LoginController">
+   <children>
+      <TextField fx:id="userField" layoutX="121.0" layoutY="98.0" />
+      <PasswordField fx:id="passField" layoutX="121.0" layoutY="142.0" onKeyPressed="#onEnterPress" />
+      <Button fx:id="logButton" layoutX="120.0" layoutY="199.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="60.0" text="Login" />
+      <Button fx:id="exitButton" layoutX="228.0" layoutY="199.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="60.0" text="Exit" />
+      <Label fx:id="userLabel" layoutX="65.0" layoutY="103.0" text="User ID" />
+      <Label fx:id="passLabel" layoutX="53.0" layoutY="147.0" text="Password" />
+      <Hyperlink fx:id="resetLink" layoutX="131.0" layoutY="175.0" text="Forgot user ID or password?">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</Pane>
