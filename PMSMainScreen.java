@@ -1,10 +1,10 @@
 package hostelsolutions;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,14 +39,16 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		btnPanel.add(cancel);
 		btnPanel.add(logout);
 		btnPanel.add(reports);
-		tab.addTab("Arrivals", new ImageIcon("arrivals.svg"), table, "Arrivals");
-		tab.addTab("Departures", table);
+		tab.insertTab("Arrivals", null, table, "Arrivals", 0);
+		tab.insertTab("Departures", null, table, "Departures", 1);
 		
 		big.setLayout(new FlowLayout());
+		big.add(tab);
 		
 		add(btnPanel, BorderLayout.SOUTH);
 
-		add(tab, BorderLayout.CENTER);
+		add(big, BorderLayout.CENTER);
+		big.setPreferredSize(new Dimension(700, 650));
 		setSize(850,600);
 		setVisible(true);
 		add.addActionListener(this);
@@ -59,20 +61,20 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == add) {
+		if (e.getSource() == add && this.isFocusable()) {
 			PMSReservationMake res = new PMSReservationMake();
 			res.setVisible(true);
 			res.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 		
-		if (e.getSource() == logout) {
+		if (e.getSource() == logout && this.isFocusable()) {
 			Login log = new Login();
 			log.setVisible(true);
 			log.setAlwaysOnTop(true);
 			this.setFocusable(false);
 		}
 		
-		if (e.getSource() == reports) {
+		if (e.getSource() == reports && this.isFocusable()) {
 			PMSReportListing rpt = new PMSReportListing();
 			rpt.setVisible(true);
 		}

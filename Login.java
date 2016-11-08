@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ public class Login extends JFrame implements ActionListener {
 	private JPanel credPanel = new JPanel();
 	private JPanel headPanel = new JPanel();
 	
+	protected File data;
 
 	public Login() {
 		super("Login");
