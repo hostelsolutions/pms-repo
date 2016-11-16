@@ -1,12 +1,11 @@
 package hostelsolutions;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,6 +13,7 @@ import javax.swing.JTextField;
 
 public class PMSReservationMake extends JFrame implements ActionListener {
 
+	
 	private JLabel first = new JLabel("First Name: ");
 	private JLabel last = new JLabel("Last Name: ");
 	private JButton contact = new JButton("Contact Info");
@@ -27,6 +27,7 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 	private JLabel co = new JLabel("Date Out");
 	private JTextField dateIn = new JTextField();
 	private JTextField dateOut = new JTextField();
+	private JButton roomNum = new JButton("Select Room");
 	
 	private JButton confirm = new JButton("Confirm");
 	private JButton cancel = new JButton("Cancel");
@@ -39,7 +40,9 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 	public PMSReservationMake() {
 		super("Make a Reservation");
 		setSize(500, 350);
-
+		this.setLocationRelativeTo(null);
+		
+		
 		
 		contactPanel.setLayout(new GridLayout(6, 6));
 
@@ -53,6 +56,7 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		contactPanel.add(dateOut);
 		contactPanel.add(cc);
 		contactPanel.add(card);
+		contactPanel.add(roomNum);
 		
 		ctrlBtn.add(confirm);
 		ctrlBtn.add(cancel);
@@ -63,6 +67,7 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		contact.addActionListener(this);
 		cancel.addActionListener(this);
 		confirm.addActionListener(this);
+		roomNum.addActionListener(this);
 		setVisible(true);
 	}
 	
@@ -79,8 +84,20 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == confirm) {
-			this.setVisible(false);
+			DBAddReservation db = new DBAddReservation();
+			
 		}
+		
+		if (e.getSource() == roomNum) {
+			PMSRoomListing rooms = new PMSRoomListing();
+			rooms.setVisible(true);
+			rooms.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			
+		}
+		
+		
+		
+		
 		
 	}
 

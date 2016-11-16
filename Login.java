@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.sql.*;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -26,6 +27,8 @@ public class Login extends JFrame implements ActionListener {
 	private JLabel password = new JLabel("Password");
 	private JTextField user = new JTextField();
 	private JPasswordField pass = new JPasswordField();
+	protected boolean admin;
+	
 	
 	private JPanel btnPanel = new JPanel();
 	private JPanel credPanel = new JPanel();
@@ -36,7 +39,7 @@ public class Login extends JFrame implements ActionListener {
 	public Login() {
 		super("Login");
 		setSize(300, 150);
-		
+		this.setLocationRelativeTo(null);
 		
 		btnPanel.setLayout(new FlowLayout());
 		credPanel.setLayout(new GridLayout(2, 2));
@@ -77,14 +80,22 @@ public class Login extends JFrame implements ActionListener {
 		String pword = pwordChecker.toString();
 		if (e.getSource() == login) {
 			
-			
-			if (userName.equals("user") && pword.equals("12345")) {
-				PMSMainScreen mscreen = new PMSMainScreen();
-				mscreen.setVisible(true);
-				mscreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			DBUserConnections userConn = new DBUserConnections(userName, pword);
+			if (userConn.isValidated()) {
+				PMSMainScreen mainScrn = new PMSMainScreen();
+				mainScrn.setVisible(true);
 				this.setVisible(false);
+				
+				mainScrn.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				mainScrn.setSize(600,600);
+				admin = userConn.isAdmin;
+				mainScrn.currentUser = this;
+				mainScrn.initUser();
+				
+				
+			} else if (!userConn.isValidated()) {
+				
 			}
-		
 		}
 		
 		if (e.getSource() == cancel) {
