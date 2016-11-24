@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -17,7 +18,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSetMetaData;
+import com.mysql.jdbc.Statement;
 
 public class PMSMainScreen extends JFrame implements ActionListener {
 	private String[] columns = {"ID", "Last Name", "First Name", "Room #", "Room Type", "Date In", "Date Out"};
@@ -55,15 +58,16 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	private JMenuItem reset = new JMenuItem("Reset Password");
 	private JMenuItem rprtsListing = new JMenuItem("Reports Listing");
 	
+	
 	public PMSMainScreen() {
 		super("[Insert Property Name]");
 		this.setLocationRelativeTo(null);
-		JTable table1 = new JTable(buildTableModel(db.rs));
+		JTable table1 = new JTable(buildTableModel(db.rs)); 
 		table1.setFillsViewportHeight(true);
 		table2.setFillsViewportHeight(true);
 		tab.addTab("Arrivals", table1);
 		tab.addTab("Departures", table2);
-		
+		//table1.setEnabled(false); // makes table uneditable/clickable
 		
 		res.add(create);
 		res.add(modify);
@@ -83,7 +87,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		menu.add(options);
 		menu.add(rprts);
 		menu.add(help);
-		
 		
 		this.setJMenuBar(menu);
 		
@@ -141,22 +144,28 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		
 		Vector<String> columns = new Vector<String>();
 		Vector<Vector<Object>> reservations = new Vector<Vector<Object>>();
-		Vector<Object> vec = new Vector<Object>();
 		try {
-			int ctr = metaData.getColumnCount();
-			for (int i = 1; i <= ctr; i++) {
-				columns.add(metaData.getColumnName(i));
-			}
 			
-			while (rs.next()) {
-				for (int i = 1; i <= ctr; i++) {
-					vec.add(rs.getObject(i));
-				}
-			}
-			reservations.add(vec);
+			 // columns
+			 int columnCount = metaData.getColumnCount();
+			    for (int column = 1; column <= columnCount; column++) {
+			    	columns.add(metaData.getColumnName(column));
+			    }
+			    
+			    // data of the table
+			    while (rs.next()) {
+			    	Vector<Object> vec = new Vector<Object>();
+			        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+			        	
+			        	vec.add(rs.getObject(columnIndex));
+			        }
+			        reservations.add(vec);
+			    }
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return new DefaultTableModel(reservations, columns);
 	}
+	
 }
