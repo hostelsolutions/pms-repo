@@ -33,7 +33,7 @@ public class DBAddReservation {
 		// should have id, roomtype/room num too. NEED ID WORKING
 		
 		try {
-			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","Trixie");
+			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
 			query = "INSERT INTO ARRIVING (id, last_name, first_name, room_num, room_type, check_in, check_out) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			statement = (PreparedStatement) conn.prepareStatement(query);
