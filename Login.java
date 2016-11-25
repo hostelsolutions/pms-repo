@@ -64,6 +64,7 @@ public class Login extends JFrame implements ActionListener {
 		pass.setEchoChar('*');
 		login.addActionListener(this);
 		cancel.addActionListener(this);
+		this.getRootPane().setDefaultButton(login); //Press enter to login
 		
 		this.setFocusable(true);
 	}
@@ -88,6 +89,7 @@ public class Login extends JFrame implements ActionListener {
 				
 				mainScrn.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				mainScrn.setSize(600,600);
+				mainScrn.setLocationRelativeTo(null);
 				admin = userConn.isAdmin;
 				mainScrn.currentUser = this;
 				mainScrn.initUser();

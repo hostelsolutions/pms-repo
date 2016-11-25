@@ -84,8 +84,15 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == confirm) {
-			DBAddReservation db = new DBAddReservation();
-			
+			// get all the data, send it to the constructor
+			String first = fname.getText();
+			String last = lname.getText();
+			String dateI = dateIn.getText();
+			String dateO = dateOut.getText();
+			String rNum = "";
+			// rNum is from a button layout, unsure how it will retrieve
+			DBAddReservation db = new DBAddReservation(first,last,dateI,dateO,rNum);
+			this.setVisible(false);
 		}
 		
 		if (e.getSource() == roomNum) {
@@ -94,11 +101,7 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 			rooms.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			
 		}
-		
-		
-		
-		
-		
+
 	}
 
 }
