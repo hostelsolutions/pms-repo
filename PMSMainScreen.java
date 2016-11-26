@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import com.mysql.jdbc.ResultSetMetaData;
 
 public class PMSMainScreen extends JFrame implements ActionListener {
@@ -28,12 +27,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	};
 	private JTable table2 = new JTable(testData, columns);
 	private JTable table3 = new JTable(testData, columns);
-//	private JButton add = new JButton("Add");
-//	private JButton modify = new JButton("Modify");
-//	private JButton cancel = new JButton("Cancel");
-//	private JButton logout = new JButton("Log Out");
-//	private JButton reports = new JButton("Reports");
-//	private JButton accessAdmin = new JButton("Admin Tools"); // temporary
 	private JTabbedPane tab = new JTabbedPane(JTabbedPane.BOTTOM);
 	private JMenuBar menu = new JMenuBar();
 	protected Login currentUser;
@@ -55,15 +48,16 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	private JMenuItem reset = new JMenuItem("Reset Password");
 	private JMenuItem rprtsListing = new JMenuItem("Reports Listing");
 	
+	
 	public PMSMainScreen() {
 		super("[Insert Property Name]");
 		this.setLocationRelativeTo(null);
-		JTable table1 = new JTable(buildTableModel(db.rs));
+		JTable table1 = new JTable(buildTableModel(db.rs)); 
 		table1.setFillsViewportHeight(true);
 		table2.setFillsViewportHeight(true);
 		tab.addTab("Arrivals", table1);
 		tab.addTab("Departures", table2);
-		
+		table1.setEnabled(false); // makes table uneditable/clickable
 		
 		res.add(create);
 		res.add(modify);
@@ -84,7 +78,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		menu.add(rprts);
 		menu.add(help);
 		
-		
 		this.setJMenuBar(menu);
 		
 
@@ -94,6 +87,10 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		create.addActionListener(this);
 		modify.addActionListener(this);
 		logout.addActionListener(this);
+		addUser.addActionListener(this);
+		exit.addActionListener(this);
+		rprtsListing.addActionListener(this);
+		
 	}
 	
 	public void initUser() {
@@ -107,6 +104,11 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() == exit) {
+			System.exit(0);
+			
+		}
 		if (e.getSource() == create) {
 			PMSReservationMake res = new PMSReservationMake();
 			res.setVisible(true);
@@ -121,19 +123,20 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 			
 		}
 		
-//		if (e.getSource() == reports) {
-//			PMSReportListing rpt = new PMSReportListing();
-//			rpt.setVisible(true);
-//		}
-//		
-//		if (e.getSource() == accessAdmin) {
-//			if (currentUser.admin) {
-//				PMSAdminAddUser add = new PMSAdminAddUser();
-//				add.setVisible(true);
-//				add.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//			} 
-//			
-//		}
+		if (e.getSource() == rprtsListing) {
+			PMSReportListing rep = new PMSReportListing();
+			rep.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			rep.setVisible(true);
+		}
+		
+		if (e.getSource() == addUser) {
+			if (currentUser.admin) {
+				PMSAdminAddUser add = new PMSAdminAddUser();
+				add.setVisible(true);
+				add.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			}
+			
+		}
 	}
 	
 	public DefaultTableModel buildTableModel(ResultSet rs) {
@@ -141,22 +144,28 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		
 		Vector<String> columns = new Vector<String>();
 		Vector<Vector<Object>> reservations = new Vector<Vector<Object>>();
-		Vector<Object> vec = new Vector<Object>();
 		try {
-			int ctr = metaData.getColumnCount();
-			for (int i = 1; i <= ctr; i++) {
-				columns.add(metaData.getColumnName(i));
-			}
 			
-			while (rs.next()) {
-				for (int i = 1; i <= ctr; i++) {
-					vec.add(rs.getObject(i));
-				}
-			}
-			reservations.add(vec);
+			 // columns
+			 int columnCount = metaData.getColumnCount();
+			    for (int column = 1; column <= columnCount; column++) {
+			    	columns.add(metaData.getColumnName(column));
+			    }
+			    
+			    // data of the table
+			    while (rs.next()) {
+			    	Vector<Object> vec = new Vector<Object>();
+			        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+			        	
+			        	vec.add(rs.getObject(columnIndex));
+			        }
+			        reservations.add(vec);
+			    }
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return new DefaultTableModel(reservations, columns);
 	}
+	
 }

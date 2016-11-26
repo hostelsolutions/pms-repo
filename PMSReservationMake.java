@@ -28,6 +28,7 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 	private JTextField dateIn = new JTextField();
 	private JTextField dateOut = new JTextField();
 	private JButton roomNum = new JButton("Select Room");
+	private JLabel room = new JLabel("");
 	
 	private JButton confirm = new JButton("Confirm");
 	private JButton cancel = new JButton("Cancel");
@@ -58,6 +59,8 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		contactPanel.add(card);
 		contactPanel.add(roomNum);
 		
+		contactPanel.add(room);
+		
 		ctrlBtn.add(confirm);
 		ctrlBtn.add(cancel);
 		ctrlBtn.add(contact);
@@ -84,21 +87,25 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == confirm) {
-			DBAddReservation db = new DBAddReservation();
-			
+			// get all the data, send it to the constructor
+			String first = fname.getText();
+			String last = lname.getText();
+			String dateI = dateIn.getText();
+			String dateO = dateOut.getText();
+			String rNum = room.getText();
+			// rNum is from a button layout, unsure how it will retrieve
+			DBAddReservation db = new DBAddReservation(first,last,dateI,dateO,rNum);
+			this.setVisible(false);
 		}
 		
 		if (e.getSource() == roomNum) {
 			PMSRoomListing rooms = new PMSRoomListing();
 			rooms.setVisible(true);
 			rooms.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			room.setText(rooms.roomNum);
 			
 		}
-		
-		
-		
-		
-		
+
 	}
 
 }

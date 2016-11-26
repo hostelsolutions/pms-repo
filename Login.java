@@ -3,11 +3,13 @@ package hostelsolutions;
 // Use test as username and 12345 as password to log in
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -16,13 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import java.sql.*;
 
 public class Login extends JFrame implements ActionListener {
 
 	private JButton login = new JButton("Login");
 	private JButton cancel = new JButton("Cancel");
-	private JLabel header = new JLabel("[Insert Company Name/Image]");
+	private JLabel header = new JLabel("");
 	private JLabel username = new JLabel("Username");
 	private JLabel password = new JLabel("Password");
 	private JTextField user = new JTextField();
@@ -33,6 +34,7 @@ public class Login extends JFrame implements ActionListener {
 	private JPanel btnPanel = new JPanel();
 	private JPanel credPanel = new JPanel();
 	private JPanel headPanel = new JPanel();
+	private BufferedImage image = null;
 	
 	protected File data;
 
@@ -40,12 +42,15 @@ public class Login extends JFrame implements ActionListener {
 		super("Login");
 		setSize(300, 150);
 		this.setLocationRelativeTo(null);
+		this.getContentPane().setBackground(Color.WHITE);
+		
 		
 		btnPanel.setLayout(new FlowLayout());
 		credPanel.setLayout(new GridLayout(2, 2));
 		headPanel.setLayout(new FlowLayout());
-		
+		header.setText("[Insert Company Name/Logo]");
 		header.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		headPanel.add(header);
 		
 		btnPanel.add(login);
 		btnPanel.add(cancel);
@@ -55,8 +60,6 @@ public class Login extends JFrame implements ActionListener {
 		credPanel.add(password);
 		credPanel.add(pass);
 		
-		headPanel.add(header);
-		
 		add(headPanel, BorderLayout.NORTH);
 		add(credPanel, BorderLayout.CENTER);
 		add(btnPanel, BorderLayout.SOUTH);
@@ -64,6 +67,7 @@ public class Login extends JFrame implements ActionListener {
 		pass.setEchoChar('*');
 		login.addActionListener(this);
 		cancel.addActionListener(this);
+		this.getRootPane().setDefaultButton(login); //Press enter to login
 		
 		this.setFocusable(true);
 	}
@@ -88,6 +92,7 @@ public class Login extends JFrame implements ActionListener {
 				
 				mainScrn.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				mainScrn.setSize(600,600);
+				mainScrn.setLocationRelativeTo(null);
 				admin = userConn.isAdmin;
 				mainScrn.currentUser = this;
 				mainScrn.initUser();

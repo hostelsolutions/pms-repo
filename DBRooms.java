@@ -18,48 +18,46 @@ public class DBRooms {
 	protected ResultSet rs = null;
 	
 	public DBRooms() {
-		try {
-			
-			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
-			query = "SELECT * FROM ROOMS";
-			statement = (Statement) conn.createStatement();
-			rs = statement.executeQuery(query);
-			
-		} catch (Exception e) {
-			System.out.println("Not Connecting");
-		}
+		
 	}
 	
-	public DBRooms(int tableSelection) {
+	public ResultSet generateQuery(String column) {
+		
 		try {
 			
-			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
-			query = "SELECT * FROM ROOMS";
-//			switch (tableSelection) {
-//			case 1:
-//				query = "SELECT floor_1 FROM ROOMS";
-//				break;
-//			case 2:
-//				query = "SELECT floor_2 FROM ROOMS";
-//				break;
-//			case 3:
-//				query = "SELECT floor_3 FROM ROOMS";
-//				break;
-//			case 4:
-//				query = "SELECT floor_4 FROM ROOMS";
-//				break;
-//			case 5:
-//				query = "SELECT floor_5 FROM ROOMS";
-//				break;
-//			}
+			switch (column) {
+			case "floor_1":
+				query = "SELECT floor_1 FROM ROOMS";
+				break;
+			case "floor_2":
+				query = "SELECT floor_2 FROM ROOMS";
+				break;
+			case "floor_3":
+				query = "SELECT floor_3 FROM ROOMS";
+				break;
+			case "floor_4":
+				query = "SELECT floor_4 FROM ROOMS";
+				break;
+			case "floor_5":
+				query = "SELECT floor_5 FROM ROOMS";
+				break;
+				
+			}
 			
+			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
 			statement = (Statement) conn.createStatement();
 			rs = statement.executeQuery(query);
 			
 		} catch (Exception e) {
+			
 			System.out.println("Not Connecting");
+			
 		}
+		
+		return rs;
 	}
+	
+	
 	
 	public ResultSetMetaData getMeta() {
 		try {
@@ -70,29 +68,6 @@ public class DBRooms {
 		return null;
 	}
 	
-	public DefaultTableModel buildTableModel(ResultSet rs) {
-			ResultSetMetaData metaData = this.getMeta();
-			
-			Vector<String> columns = new Vector<String>();
-			Vector<Vector<Object>> rooms = new Vector<Vector<Object>>();
-			Vector<Object> vec = new Vector<Object>();
-			try {
-				int ctr = metaData.getColumnCount();
-				System.out.println(ctr);
-				for (int i = 1; i <= ctr; i++) {
-					columns.add(metaData.getColumnName(i));
-				}
-				
-				while (rs.next()) {
-					for (int i = 1; i <= ctr; i++) {
-						vec.add(rs.getObject(i));
-					}
-				}
-				rooms.add(vec);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return new DefaultTableModel(rooms, columns);
-	}
+
 	
 }
