@@ -1,0 +1,36 @@
+When opening MySQL workbench, create a new connection:
+	
+		Hostname: localhose
+		Port: 3306
+		Username: root
+		Password: root
+
+These need to match for the program to run. 
+
+Once in, go ahead and create a new schema, name this schema "doggo"
+
+Click on the schema on the bottom left, and then click at the top "create table"
+
+Name the table "login", and create a column, and then create a second column named "username". DELETE THE FIRST COLUMN for now
+"username" should be your first column now, create a second column named "password" and then create a third column named "admin". All of these should be of the type VARCHAR
+
+click create and ok. 
+
+Open up a new Query and type the following script
+	
+		> INSERT INTO LOGIN (username, password, admin) VALUES ("user", "test", "1"); 
+		> INSERT INTO LOGIN (username, password, admin) VALUES ("user2", "user1", "0");
+		> SELECT * FROM LOGIN
+		
+You should see the two employees you entered into the table from the query line. Great.
+
+Repeat the steps listed before the query but this time you need to create columns in order:
+	id_num, last_name, first_name, room_num, room_type, check_in, check_out  >> table name: arriving
+	id_num, last_name, first_name, room_num, room_type, check_in, check_out  >> table name: in_house
+	id_num, last_name, first_name, room_type, cancelled_on  				 >> table name: cancellations
+	
+	
+You can insert anything into your program, as long as the tables are the same you shouldn't have to adjust any of
+the code in the program to connect to the database. They are listed as constants in the program but are editable should
+you run into issues. 
+	
