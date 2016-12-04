@@ -18,26 +18,24 @@ public class DBAddReservation {
 	protected String lastName;
 	protected String dateIn;
 	protected String dateOut;
+	private String ID;
 	
 	public DBAddReservation(String first, String last, String dateI, String dateO, String rNum) {
 		
-		// not needed probably 
+		PMSIDSystem IDCreate = new PMSIDSystem();
+		ID = IDCreate.returnID();
 		firstName = first;
 		lastName = last;
 		dateIn = dateI;
 		dateOut = dateO;
 		
-		if(dateIn == ""){
-			
-		}
-		// should have id, roomtype/room num too. NEED ID WORKING
-		
+		// should have roomtype/room num too
 		try {
 			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
-			query = "INSERT INTO ARRIVING (id, last_name, first_name, room_num, room_type, check_in, check_out) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			query = "INSERT INTO ARRIVING (id_num, last_name, first_name, room_num, room_type, "
+					+ "check_in, check_out) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			statement = (PreparedStatement) conn.prepareStatement(query);
-			statement.setString(1, "21"); //id, temporarily just a number, MUST BE CHANGED EVERY USE
+			statement.setString(1, ID); //id, temporarily just a number, MUST BE CHANGED EVERY USE
 			statement.setString(2,lastName);
 			statement.setString(3,firstName);
 			statement.setString(4,"22"); //room num
