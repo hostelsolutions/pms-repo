@@ -103,10 +103,9 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		// Finds the ID when selecting a row
 		table1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
-	            // do some actions here, for example
-	            // print first column value from selected row
+	            	// Gets the primary key (The ID) from the table and stores it for later use
 	        	primaryKey = table1.getValueAt(table1.getSelectedRow(), 0).toString();
-	            System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+	            	//System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
 	        }
 	    });
 	}
