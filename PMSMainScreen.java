@@ -46,6 +46,7 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	private JMenuItem logout = new JMenuItem("Logout");
 	private JMenuItem create = new JMenuItem("New...");
 	private JMenuItem modify = new JMenuItem("Edit...");
+	private JMenuItem cancel = new JMenuItem("Cancel");
 	private JMenuItem exit = new JMenuItem("Exit");
 	private JMenu adminTools = new JMenu("Admin Tools");
 	private JMenuItem addUser = new JMenuItem("Add an Employee");
@@ -54,6 +55,8 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	private JMenuItem reset = new JMenuItem("Reset Password");
 	private JMenuItem rprtsListing = new JMenuItem("Reports Listing");
 	
+	private DBCancelReservation DBCancel;
+	private String primaryKey; // stores row where you clicked
 	
 	public PMSMainScreen() {
 		super("[Insert Property Name]");
@@ -67,6 +70,7 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		
 		res.add(create);
 		res.add(modify);
+		res.add(cancel);
 		file.add(logout);
 		file.addSeparator();
 		file.add(exit);
@@ -93,6 +97,7 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		create.addActionListener(this);
 		modify.addActionListener(this);
 		logout.addActionListener(this);
+		cancel.addActionListener(this);
 	}
 	
 	public void initUser() {
@@ -118,6 +123,11 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 			log.setAlwaysOnTop(true);
 			this.dispose();
 			
+		}
+		
+		if (e.getSource() == cancel){
+			 DBCancel = new DBCancelReservation(primaryKey);
+			 DBCancel.cancelRes();
 		}
 		
 //		if (e.getSource() == reports) {
