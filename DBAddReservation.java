@@ -29,13 +29,13 @@ public class DBAddReservation {
 		dateIn = dateI;
 		dateOut = dateO;
 		
-		// should have roomtype/room num too
+		// should have roomtype/room num from the button menu 
 		try {
 			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
 			query = "INSERT INTO ARRIVING (id_num, last_name, first_name, room_num, room_type, "
 					+ "check_in, check_out) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			statement = (PreparedStatement) conn.prepareStatement(query);
-			statement.setString(1, ID); //id, temporarily just a number, MUST BE CHANGED EVERY USE
+			statement.setString(1, ID); 
 			statement.setString(2,lastName);
 			statement.setString(3,firstName);
 			statement.setString(4,"22"); //room num
