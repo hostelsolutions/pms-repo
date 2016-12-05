@@ -3,13 +3,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 public class PMSReservationMake extends JFrame implements ActionListener {
 
@@ -25,8 +28,8 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 	
 	private JLabel ci = new JLabel("Date In");
 	private JLabel co = new JLabel("Date Out");
-	private JTextField dateIn = new JTextField();
-	private JTextField dateOut = new JTextField();
+	private JFormattedTextField  dateIn;
+	private JFormattedTextField  dateOut;
 	private JButton roomNum = new JButton("Select Room");
 	
 	private JButton confirm = new JButton("Confirm");
@@ -42,8 +45,18 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		setSize(500, 350);
 		this.setLocationRelativeTo(null);
 		
+		// formats date cells
+		Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String dateString = formatter.format(date);
+        dateIn = new JFormattedTextField(createFormatter("####-##-## ##:##:##"));
+        dateIn.setColumns(20);
+        dateIn.setText(dateString);
 		
-		
+        dateOut = new JFormattedTextField(createFormatter("####-##-## ##:##:##"));
+        dateOut.setColumns(20);
+        dateOut.setText(dateString);
+        
 		contactPanel.setLayout(new GridLayout(6, 6));
 
 		contactPanel.add(first);
@@ -71,6 +84,17 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 	
+    private MaskFormatter createFormatter(String s) {
+        MaskFormatter formatter = null;
+        try {
+            formatter = new MaskFormatter(s);
+        } catch (java.text.ParseException exc) {
+            System.err.println("formatter is incorrect, yyy-MM-dd hh:mm:ss: " + exc.getMessage());
+            System.exit(-1);
+        }
+        return formatter;
+    }
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == contact) {
@@ -92,6 +116,10 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 			String rNum = "";
 			// rNum is from a button layout, unsure how it will retrieve
 			DBAddReservation db = new DBAddReservation(first,last,dateI,dateO,rNum);
+			
+			// Notify the main screen that the table needs to refreshed
+			// 
+			
 			this.setVisible(false);
 		}
 		
