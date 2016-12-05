@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.ResultSetMetaData;
 import com.mysql.jdbc.Statement;
 public class DBUserConnections {
 
@@ -15,7 +16,7 @@ public class DBUserConnections {
 	protected String query = "";
 	private String userName;
 	private String password;
-	private ResultSet rs = null;
+	protected ResultSet rs = null;
  	protected boolean isAdmin = false;
  	String adminVal;
  	
@@ -44,6 +45,17 @@ public class DBUserConnections {
 			System.out.println("Not Connecting");
 		}
 	}
+	
+	public DBUserConnections() {
+		
+		try {
+			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
+			
+		} catch (Exception e) {
+			System.out.println("Not Connecting");
+		}
+		
+	} 
 
 	public boolean isValidated() {
 		try {
@@ -85,5 +97,25 @@ public class DBUserConnections {
 		
 	}
 	
+//	public void removeUser() { 
+//		try {
+//			query = "DELETE FROM LOGIN WHERE (username, password, admin) = (?, ?, ?)";
+//			stmt = (PreparedStatement) conn.prepareStatement(query);
+//			
+//			stmt.setString(arg0, arg1);
+//		}
+//		
+//		
+//	}
+	
+	
+	public ResultSetMetaData getMeta() {
+		try {
+			return (ResultSetMetaData) rs.getMetaData();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

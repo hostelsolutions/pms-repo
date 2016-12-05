@@ -27,6 +27,7 @@ public class DBArrivalReservations {
 		}
 	}
 	
+	
 	public ResultSetMetaData getMeta() {
 		try {
 			return (ResultSetMetaData) rs.getMetaData();
