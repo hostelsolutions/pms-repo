@@ -1,5 +1,4 @@
 package hostelsolutions;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -16,8 +15,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import com.mysql.jdbc.ResultSetMetaData;
 
@@ -61,15 +62,24 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	private DBCancelReservation DBCancel;
 	private String primaryKey; // stores row where you clicked
 	
+	// currently cells now uneditable but cannot refresh still
+	private DefaultTableModel model;
+	private JTable table1;
+	private Vector<String> columns1 = new Vector<String>();
+	private Vector<Vector<Object>> reservations = new Vector<Vector<Object>>();
+	
 	public PMSMainScreen() {
 		super("[Insert Property Name]");
 		this.setLocationRelativeTo(null);
-		JTable table1 = new JTable(buildTableModel(db.rs)); 
+		
+		buildTableModel(db.rs);
+		model = new CustomTableModel(reservations,columns1);
+		table1 = new JTable(model); 
+		
 		table1.setFillsViewportHeight(true);
 		table2.setFillsViewportHeight(true);
 		tab.addTab("Arrivals", table1);
 		tab.addTab("Departures", table2);
-		//table1.setEnabled(false); // makes table uneditable/clickable
 		
 		res.add(create);
 		res.add(modify);
@@ -92,7 +102,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		menu.add(help);
 		
 		this.setJMenuBar(menu);
-		
 
 		add(tab, BorderLayout.CENTER);
 		setSize(850,600);
@@ -111,6 +120,19 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	            	//System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
 	        }
 	    });
+		
+//		Timer timer = new Timer(0, new ActionListener() {
+//
+//			   @Override
+//			   public void actionPerformed(ActionEvent e) {
+					// this seems to only tell it to update data, not how to do it
+//				   ((AbstractTableModel) table1.getModel()).fireTableDataChanged();
+//			   }
+//			});
+//
+//		timer.setDelay(10); // delay for 30 seconds
+//		timer.start();
+		
 	}
 	
 	public void initUser() {
@@ -158,17 +180,15 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 //		}
 	}
 	
+	// currently only makes the reservations and columns data to send to the customtablemodel
 	public DefaultTableModel buildTableModel(ResultSet rs) {
-		ResultSetMetaData metaData = db.getMeta();
+		ResultSetMetaData metaData = (ResultSetMetaData) db.getMeta();
 		
-		Vector<String> columns = new Vector<String>();
-		Vector<Vector<Object>> reservations = new Vector<Vector<Object>>();
 		try {
-			
 			 // columns
 			 int columnCount = metaData.getColumnCount();
 			    for (int column = 1; column <= columnCount; column++) {
-			    	columns.add(metaData.getColumnName(column));
+			    	columns1.add(metaData.getColumnName(column));
 			    }
 			    
 			    // data of the table
@@ -184,7 +204,24 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return new DefaultTableModel(reservations, columns);
+		return new DefaultTableModel(reservations, columns1);
 	}
+	
+	// think more methods need to be implemented for editing data, like adding or removing rows, I really
+	// do not know how though
+	class CustomTableModel extends DefaultTableModel {
+	      public CustomTableModel(Vector<Vector<Object>> reservations, Vector<String> columns1) {
+	        super(reservations, columns1);
+	      }
+
+	      public Class getColumnClass(int col) {
+	        Vector v = (Vector) dataVector.elementAt(0);
+	        return v.elementAt(col).getClass();
+	      }
+
+	      public boolean isCellEditable(int row, int col) {
+	        return false;
+	      }
+	    }
 	
 }
