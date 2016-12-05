@@ -31,12 +31,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	};
 	private JTable table2 = new JTable(testData, columns);
 	private JTable table3 = new JTable(testData, columns);
-//	private JButton add = new JButton("Add");
-//	private JButton modify = new JButton("Modify");
-//	private JButton cancel = new JButton("Cancel");
-//	private JButton logout = new JButton("Log Out");
-//	private JButton reports = new JButton("Reports");
-//	private JButton accessAdmin = new JButton("Admin Tools"); // temporary
 	private JTabbedPane tab = new JTabbedPane(JTabbedPane.BOTTOM);
 	private JMenuBar menu = new JMenuBar();
 	protected Login currentUser;
