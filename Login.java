@@ -28,6 +28,7 @@ public class Login extends JFrame implements ActionListener {
 	private JTextField user = new JTextField();
 	private JPasswordField pass = new JPasswordField();
 	protected boolean admin;
+	protected PMSMainScreen mainScrn;
 	
 	
 	private JPanel btnPanel = new JPanel();
@@ -83,8 +84,10 @@ public class Login extends JFrame implements ActionListener {
 			
 			DBUserConnections userConn = new DBUserConnections(userName, pword);
 			if (userConn.isValidated()) {
-				PMSMainScreen mainScrn = new PMSMainScreen();
+				mainScrn = new PMSMainScreen();
 				mainScrn.setVisible(true);
+				user.setText("");
+				pass.setText("");
 				this.setVisible(false);
 				
 				mainScrn.setDefaultCloseOperation(EXIT_ON_CLOSE);
