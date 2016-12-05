@@ -37,6 +37,8 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 //	private JButton logout = new JButton("Log Out");
 //	private JButton reports = new JButton("Reports");
 //	private JButton accessAdmin = new JButton("Admin Tools"); // temporary
+	private JButton checkIn = new JButton("Check In");
+	private JButton checkOut = new JButton("Check Out");
 	private JTabbedPane tab = new JTabbedPane(JTabbedPane.BOTTOM);
 	private JMenuBar menu = new JMenuBar();
 	protected Login currentUser;
@@ -100,6 +102,8 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		menu.add(options);
 		menu.add(rprts);
 		menu.add(help);
+		menu.add(checkIn);
+		menu.add(checkOut);
 		
 		this.setJMenuBar(menu);
 
@@ -110,7 +114,8 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		modify.addActionListener(this);
 		logout.addActionListener(this);
 		cancel.addActionListener(this);
-		
+		checkIn.addActionListener(this);
+		checkOut.addActionListener(this);
 		
 		// Finds the ID when selecting a row
 		table1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -165,6 +170,15 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 			 DBCancel.cancelRes();
 		}
 		
+		if(e.getSource() == checkIn){
+			DBCheckIn cIn = new DBCheckIn(primaryKey);
+			cIn.checkIn();
+		}
+		
+		if(e.getSource() == checkOut){
+			DBCheckOut cOut = new DBCheckOut(primaryKey);
+			cOut.checkOut();
+		}
 //		if (e.getSource() == reports) {
 //			PMSReportListing rpt = new PMSReportListing();
 //			rpt.setVisible(true);
@@ -222,6 +236,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	      public boolean isCellEditable(int row, int col) {
 	        return false;
 	      }
-	}
+	    }
 	
 }
