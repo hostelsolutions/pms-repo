@@ -222,6 +222,6 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 	      public boolean isCellEditable(int row, int col) {
 	        return false;
 	      }
-	    }
+	}
 	
 }
