@@ -2,6 +2,7 @@ package hostelsolutions;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -27,7 +28,6 @@ public class DBModifyReservation {
 		uID = ID;
 		try {
 			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
-			conn.setAutoCommit(false); //transaction block start
 
 			sqlSelect = "SELECT * FROM ARRIVING WHERE id_num = ?";
 			statement = (PreparedStatement) conn.prepareStatement(sqlSelect);
@@ -39,8 +39,8 @@ public class DBModifyReservation {
 				lastName = rs.getString("last_name");
 				roomType = rs.getString("room_type");
 				roomNum = rs.getString("room_num");
-				dateIn = rs.getString("date_in");
-				dateOut = rs.getString("date_out");
+				dateIn = rs.getString("check_in");
+				dateOut = rs.getString("check_out");
 			}
 
 		} catch (Exception e) {
@@ -51,20 +51,21 @@ public class DBModifyReservation {
 
 	public void modData(String lName, String fName, String rType, String rNum, String dIn, String dOut){
 		try {
-			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
-			conn.setAutoCommit(false); //transaction block start
 
-			sqlModify = "Update Arrivals SET last_name = ?, first_name = ?,"
-					+ " + room_type = ?, room_num = ?, date_in = ?, date_out = ? where id_num = ?";
+			sqlModify = "Update ARRIVING SET last_name = ?, first_name = ?,"
+					+ " + room_type = ?, room_num = ?, check_in = ?, check_out = ? where id_num = ?";
+
 			statement = (PreparedStatement) conn.prepareStatement(sqlModify);
-			statement.setString(7, uID);
+
 			statement.setString(1, lName);
 			statement.setString(2, fName);
 			statement.setString(3, rType);
 			statement.setString(4, rNum);
 			statement.setString(5, dIn);
 			statement.setString(6, dOut);
-
+			statement.setString(7, uID);
+			statement.executeUpdate();
+			
 		}catch (Exception e) {
 			System.out.println("Database Error");
 			e.printStackTrace();
