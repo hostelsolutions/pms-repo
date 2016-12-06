@@ -8,17 +8,17 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSetMetaData;
 import com.mysql.jdbc.Statement;
 
-public class DBArrivalReservations extends DBConnection{
+public class DBDepartures extends DBConnection{
 	private Connection conn = null;
 	private Statement statement = null;
 	private String query;
 	protected ResultSet rs = null;
 	
-	public DBArrivalReservations() {
+	public DBDepartures() {
 		try {
 			
 			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
-			query = "SELECT * FROM ARRIVING";
+			query = "SELECT * FROM DEPARTURES";
 			statement = (Statement) conn.createStatement();
 			rs = statement.executeQuery(query);
 			
