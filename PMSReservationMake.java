@@ -5,13 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JFormattedTextField;
+
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
 import javax.swing.text.MaskFormatter;
 
 public class PMSReservationMake extends JFrame implements ActionListener {
@@ -30,7 +31,6 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 	private JLabel co = new JLabel("Date Out");
 	private JFormattedTextField  dateIn;
 	private JFormattedTextField  dateOut;
-	private JLabel rooms = new JLabel("Room Number:");
 	//private JButton roomNum = new JButton("Select Room");
 	
 	private JButton confirm = new JButton("Confirm");
@@ -39,20 +39,15 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 	private JPanel contactPanel = new JPanel();
 	private JPanel ctrlBtn = new JPanel();
 	
+	private JTextField rNum = new JTextField();
+	private JLabel rNL = new JLabel("Room Number:");
 	protected ContactInfo contactInfo = new ContactInfo();
-	
-	private String roomNum;
 	
 	public PMSReservationMake() {
 		super("Make a Reservation");
 		setSize(500, 350);
 		this.setLocationRelativeTo(null);
 		
-		// combo box
-		String[] choices = { "100","101", "102","103", "104","105", "106","107", "108","109", 
-				"200","201","202", "203","204", "205", "206", "207","208", "209"};
-		
-
 		// formats date cells
 		Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -77,7 +72,8 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		contactPanel.add(dateOut);
 		contactPanel.add(cc);
 		contactPanel.add(card);
-		contactPanel.add(rooms);
+		contactPanel.add(rNL);
+		contactPanel.add(rNum);
 		
 		ctrlBtn.add(confirm);
 		ctrlBtn.add(cancel);
@@ -89,17 +85,8 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 		cancel.addActionListener(this);
 		confirm.addActionListener(this);
 		//roomNum.addActionListener(this);
-		setVisible(true);
 		
-		final JComboBox<String> cb = new JComboBox<String>(choices);
-	    cb.setVisible(true);
-	    contactPanel.add(cb);
-	    cb.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	        	roomNum = cb.getSelectedItem().toString();
-	        }
-	      });
-	    
+		setVisible(true);
 	}
 	
     private MaskFormatter createFormatter(String s) {
@@ -131,14 +118,16 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 			String last = lname.getText();
 			String dateI = dateIn.getText();
 			String dateO = dateOut.getText();
-			String rNum = roomNum;
+			String Num = rNum.getText();
 			// rNum is from a button layout, unsure how it will retrieve
-			DBAddReservation db = new DBAddReservation(first,last,dateI,dateO,rNum);
+			DBAddReservation db = new DBAddReservation(first,last,dateI,dateO,Num);
 			
 			// Notify the main screen that the table needs to refreshed
 			// 
+			Main.login.mainScrn.refresh();
 			
-			this.setVisible(false);
+			
+			this.dispose();
 		}
 		
 //		if (e.getSource() == roomNum) {
