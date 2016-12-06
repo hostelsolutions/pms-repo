@@ -46,6 +46,8 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 	protected ContactInfo contactInfo = new ContactInfo();
 	private String uID;
 	
+	private JTextField rNum = new JTextField("Room Number");
+	
 	DBModifyReservation db;
 	public PMSModifyReservation(String ID) {
 		super("Modify a Reservation");
@@ -56,10 +58,6 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 		
 		setSize(500, 350);
 		this.setLocationRelativeTo(null);
-		
-		// combo box
-		String[] choices = { "100","101", "102","103", "104","105", "106","107", "108","109", 
-				"200","201","202", "203","204", "205", "206", "207","208", "209"};
 
 		
 		// formats date cells
@@ -87,7 +85,7 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 		contactPanel.add(cc);
 		contactPanel.add(card);
 		contactPanel.add(rooms);
-
+		contactPanel.add(rNum);
 		
 		ctrlBtn.add(confirm);
 		ctrlBtn.add(cancel);
@@ -105,18 +103,26 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 		lname.setText(db.lastName);
 		dateIn.setText(db.dateIn);
 		dateOut.setText(db.dateOut);
-		String rNum = db.roomNum;
+		roomNum = db.roomNum;
 		
-		final JComboBox<String> cb = new JComboBox<String>(choices);
-	    cb.setVisible(true);
-	    contactPanel.add(cb);
-	    cb.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	        	roomNum = (String) cb.getSelectedItem();
-	        }
-	      });
-	    
-	    cb.setSelectedItem(rNum);
+		rNum.setText(roomNum);
+		
+//		// combo box
+//		String[] choices = { "100","101", "102","103", "104","105", "106","107", "108","109", 
+//				"200","201","202", "203","204", "205", "206", "207","208", "209"};
+//		
+//		final JComboBox<String> cb = new JComboBox<String>(choices);
+//	    cb.setVisible(true);
+//	    contactPanel.add(cb);
+//	    cb.addActionListener(new ActionListener() {
+//	        public void actionPerformed(ActionEvent e) {
+//	        	roomNum = (String) cb.getSelectedItem();
+//	        }
+//	      });
+//	    
+//	    cb.setSelectedItem(rNum);
+		
+		
 	}
 	
     private MaskFormatter createFormatter(String s) {
@@ -148,10 +154,9 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 			String last = lname.getText();
 			String dateI = dateIn.getText();
 			String dateO = dateOut.getText();
-			String rNum = roomNum; // need to know how to get these
+			String Num = rNum.getText(); // need to know how to get these
 			String rType = "Standard";
-			System.out.println(roomNum);
-			db.modData(last, first, rType, rNum, dateI, dateO);
+			db.modData(last, first, rType, Num, dateI, dateO);
 			this.setVisible(false);
 		}
 		
