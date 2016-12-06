@@ -156,7 +156,6 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 			String dateO = dateOut.getText();
 			String Num = rNum.getText(); // need to know how to get these
 			String rType = "Standard";
-			System.out.println(roomNum);
 			db.modData(last, first, rType, Num, dateI, dateO);
 			this.setVisible(false);
 		}
