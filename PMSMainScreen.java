@@ -117,6 +117,7 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		checkIn.addActionListener(this);
 		checkOut.addActionListener(this);
 		
+		
 		// Finds the ID when selecting a row
 		table1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
@@ -178,6 +179,10 @@ public class PMSMainScreen extends JFrame implements ActionListener {
 		if(e.getSource() == checkOut){
 			DBCheckOut cOut = new DBCheckOut(primaryKey);
 			cOut.checkOut();
+		}
+		
+		if(e.getSource() == modify){
+			PMSModifyReservation mRes = new PMSModifyReservation(primaryKey);
 		}
 //		if (e.getSource() == reports) {
 //			PMSReportListing rpt = new PMSReportListing();
