@@ -33,7 +33,7 @@ public class DBAddReservation {
 		try {
 			conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/doggo","root","root");
 			query = "INSERT INTO ARRIVING (id_num, last_name, first_name, room_num, room_type, "
-					+ "check_in, check_out) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+ "date_in, date_out) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			statement = (PreparedStatement) conn.prepareStatement(query);
 			statement.setString(1, ID); 
 			statement.setString(2,lastName);

@@ -124,7 +124,7 @@ public class PMSReservationMake extends JFrame implements ActionListener {
 			
 			// Notify the main screen that the table needs to refreshed
 			// 
-			Main.login.mainScrn.refresh();
+			Main.login.mainScrn.refreshTable();
 			
 			
 			this.dispose();

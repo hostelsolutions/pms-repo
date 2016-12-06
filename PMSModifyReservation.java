@@ -49,6 +49,7 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 	private JTextField rNum = new JTextField("Room Number");
 	
 	DBModifyReservation db;
+	
 	public PMSModifyReservation(String ID) {
 		super("Modify a Reservation");
 		

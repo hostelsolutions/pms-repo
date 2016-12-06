@@ -4,6 +4,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,9 +16,6 @@ import javax.swing.JPanel;
 
 public class PMSReportListing extends JFrame implements ActionListener  {
 	
-	private String[] labelShit = {"Management Statistics", "Property Statistics", "Accounting Statistics", 
-								  "Rate Report", "Arrivals Report", "Departure Report", "In House Report", 
-								  "Future Rooms Sold", "End of Month Reports", "End of Year Reports"};
 	private JCheckBox check1 = new JCheckBox("Management Statistics");
 	private JCheckBox check2 = new JCheckBox("Property Statistics");
 	private JCheckBox check3 = new JCheckBox("Accounting Statistics");
@@ -64,7 +65,110 @@ public class PMSReportListing extends JFrame implements ActionListener  {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pull) {
-			this.setVisible(false);
+			if (check1.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Management Statistics.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check2.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Property Statistics.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check3.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Accounting Statistics.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check4.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Rate Report.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check5.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Arrivals.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check6.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Departures.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check7.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("In-House.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check8.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("Future Rooms Sold.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check9.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("End of Month Reports.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (check10.isSelected()) {
+				try {
+					PrintWriter pr = new PrintWriter(new FileWriter(new File("End of Year Reports.txt")));
+					pr.print("This is a test report ");
+					this.dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		
+			
+			
+			
 		}
 		
 		if (e.getSource() == cancel) {
