@@ -158,7 +158,10 @@ public class PMSModifyReservation extends JFrame implements ActionListener {
 			String Num = rNum.getText(); // need to know how to get these
 			String rType = "Standard";
 			db.modData(last, first, rType, Num, dateI, dateO);
-			this.setVisible(false);
+			
+			Main.login.mainScrn.refreshTable();
+			
+			this.dispose();
 		}
 		
 //		if (e.getSource() == roomNum) {
